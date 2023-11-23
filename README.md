@@ -133,7 +133,6 @@ Se crea un objeto anonimo que almacena los atributos solicitados
 ```
 /api/product/GetByMostSold
 ```
-```
  public async Task<object> GetByMostSold()
     {
         return await _context.OrderDetails
@@ -145,7 +144,6 @@ Se crea un objeto anonimo que almacena los atributos solicitados
                             .OrderByDescending(p => p.UnitsSold)
                             .FirstOrDefaultAsync();
     }
-```
 
 Se agrupa por productId
 Se seleccciona la agrupacion y se elije el nombre del primer grupo asociado
@@ -196,7 +194,7 @@ public async Task<IEnumerable<object>> GetNameNotDeliveratedOnTime()
 se aplica un filtro donde la fecha de entraga sea mayor que la esperada
 y se proyecta el nombre con un objeto anonimo
 
-Devuelve  un listado de las diferentes gamas  de producto   que ha comprado un cliente
+10.Devuelve  un listado de las diferentes gamas  de producto   que ha comprado un cliente
 ```
 /api/product/GetGama
 ```   
@@ -210,6 +208,6 @@ Devuelve  un listado de las diferentes gamas  de producto   que ha comprado un c
                             .ToListAsync();
     }
 
-Se proyecta un objeto anonimo donde se selecciona la gama vinculada al producto y con distint se eliminar las posibles concurrencias
+Se proyecta un objeto anonimo donde se selecciona la gama vinculada al producto y con distinct se eliminar las posibles concurrencias
     
 
