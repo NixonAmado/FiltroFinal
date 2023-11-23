@@ -1,5 +1,16 @@
 # FiltroFinal
 
+
+
+#### Pasos para el volcado de datos a la bd
+1. Para este proyecto se requiere el uso de mySql Workbench
+2. Entra a Api y ejecuta el comando dotnet run, si no funciona puedes hacer uso del script Update para que ef convierta tu estructura orienta a objetos a una tabular en la bd.
+3. Una tengas las tablas que vas a usar y que todo salió bien, puedes hacer el volcado de datos dirigiendote a [Datos](./Datos.md)
+- Una vez adentro de Datos puedes hacer ctrl + A para copiar todo el texto.
+- Vas a Workbench y elijes la bd llamada jardineria2, abres un archivo SQL y le das a ctrl + V
+- Señala todos los datos con ctrl + A y le das al rayo que apartece en el menú de ejecución que se encuentra en la parte superior del archivo
+- Y ya quedaría el volcado de datos echo.
+
 1.Devuelve el listado de clientes indicando el nombre del cliente y cuántos pedidos ha realizado. Tenga en cuenta que pueden existir clientes que no han realizado ningun pedido.
 ```
 /api/customer/GetWithOrdersQuantity
