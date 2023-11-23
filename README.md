@@ -133,6 +133,7 @@ Se crea un objeto anonimo que almacena los atributos solicitados
 ```
 /api/product/GetByMostSold
 ```
+```
  public async Task<object> GetByMostSold()
     {
         return await _context.OrderDetails
