@@ -1,11 +1,9 @@
 # FiltroFinal
 
-
-
 #### Pasos para el volcado de datos a la bd
 1. Para este proyecto se requiere el uso de mySql Workbench
 2. Entra a Api y ejecuta el comando dotnet run, si no funciona puedes hacer uso del script Update para que ef convierta tu estructura orienta a objetos a una tabular en la bd.
-3. Una tengas las tablas que vas a usar y que todo salió bien, puedes hacer el volcado de datos dirigiendote a [Datos](./Datos.md)
+3. Una vez tengas las tablas que vas a usar y que todo salió bien, puedes hacer el volcado de datos dirigiendote a [Datos](./Datos.md)
 - Una vez adentro de Datos puedes hacer ctrl + A para copiar todo el texto.
 - Vas a Workbench y elijes la bd llamada jardineria2, abres un archivo SQL y le das a ctrl + V
 - Señala todos los datos con ctrl + A y le das al rayo que apartece en el menú de ejecución que se encuentra en la parte superior del archivo
@@ -15,7 +13,7 @@
 ```
 /api/customer/GetWithOrdersQuantity
 ```
-public async Task<IEnumerable<object>> GetWithOrdersQuantity()
+        public async Task<IEnumerable<object>> GetWithOrdersQuantity()
         {
             return await _context.Customers.Select(p => new
             {
@@ -33,13 +31,13 @@ Se crea como objeto, ya que, para este enpoint necesito una entidad que no esta 
 ```
 /api/order/GetWithDataByOrderNotDelivered
 ```
-public async Task<IEnumerable<Order>> GetWithDataByOrderNotDelivered()
-{
-    return await _context.Orders
-    .Where(o => o.DeliveryDate > o.ExpectedDate && o.DeliveryDate != null) 
-    .Include(p => p.Customer)
-    .ToListAsync();
-}
+        public async Task<IEnumerable<Order>> GetWithDataByOrderNotDelivered()
+        {
+            return await _context.Orders
+            .Where(o => o.DeliveryDate > o.ExpectedDate && o.DeliveryDate != null) 
+            .Include(p => p.Customer)
+            .ToListAsync();
+        }
 
 Se aplica un Filtro que indica devuelve true si la fecha de entrega es mayor a la fecha esperada y además no es nula.
 Se crea un dto para esta enpoint ya que tengo todos los atributos que necesito.
@@ -50,13 +48,13 @@ Se hace el include de customer para poder traerme el id asociado a este.
 ```
 /api/product/GetByNotOrdered
 ```
-public async Task<IEnumerable<Product>> GetByNotOrdered()
-{
-    return await _context.Products
+        public async Task<IEnumerable<Product>> GetByNotOrdered()
+        {
+            return await _context.Products
                         .Include(p => p.GamaNavigation)
                         .Where(p => !p.OrderDetails.Any())
                         .ToListAsync();
-}
+        }
 Se incluye la propiedad de navegacion gama, ya que, se asimila que la img es la que esta asociada a la gama, según la referencia en la bd.
 Se crea un dto para esta enpoint ya que tengo todos los atributos que necesito.
 Se aplica un filtro con where, donde se aplica un any para decir que si el producto  tiene algun registro de  orderdetails lo devuelva, pero con el caracter de exclamacion revertimos la respuesta si ningun producto tiene asociada alguna orden
@@ -65,14 +63,14 @@ Se aplica un filtro con where, donde se aplica un any para decir que si el produ
 ```
 api/office/GetByNotAssociatedEmployeeToGamaP/{gama}
 ```
-public async Task<IEnumerable<Office>> GetByNotAssociatedEmployeeToGamaP(string gama)
-{
-    return await _context.Offices 
+        public async Task<IEnumerable<Office>> GetByNotAssociatedEmployeeToGamaP(string gama)
+        {
+            return await _context.Offices 
                         .Include(o => o.Address)
                         .Where(o => o.Employees.Any(e => e.JobTitle.ToUpper() == "REPRESENTANTE VENTAS" &&
                          !e.Orders.Any(o => o.OrderDetails.Any(od => od.Product.Gama.ToUpper() == gama))))
                         .ToListAsync();
-}
+        }
 Se crea un dto para esta enpoint ya que tengo todos los atributos que necesito.
 Se incluye la referencia a la direccion para que pueda ser mappeado por medio del include
 Se selecciona todos los empleados que tengan como cargo "Representante ventas" y se usa el any para revisar que la propiedad de navegacion contenga por lo menos un registro, y cuando llegamos al la gama del producto, se compara con el parametro gama
@@ -84,8 +82,8 @@ Al momento de usar el signo de admiracion le cambiamos el retorno a todos aquell
 ```
 /api/product/GetTotalSalesByRangeIva/{rango}
 ```
-public async Task<IEnumerable<object>> GetTotalSalesByRangeIva(decimal range)
-{
+    public async Task<IEnumerable<object>> GetTotalSalesByRangeIva(decimal range)
+    {
     return await _context.OrderDetails
                         .GroupBy(p => p.ProductId)
                         .Select(g => new {
@@ -97,8 +95,8 @@ public async Task<IEnumerable<object>> GetTotalSalesByRangeIva(decimal range)
                         .Where(p => p.Total > range)
                         .OrderByDescending(p => p.TotalWithTaxes)
                         .ToListAsync();
-}
-No pudo crear un dto ya que tiene propiedades adicionales 
+    }
+No pude crear un dto ya que tiene propiedades adicionales 
 Se agrupa por el id de los productos para así obtener una agrupacios de todos los productos relacionados
 Se selecciona el nombre de uno de los productos de la agrupacion
 Se suman todas las cantidades vendidas por cada producto. ya que la cantidad es un string se tiene que convertir a entero por medioi de Convert.ToInt32
@@ -112,8 +110,8 @@ se ordena por el precio total con impuestos
 ```
 /api/employee/GetByNotCustomer
 ```
-public async Task<IEnumerable<object>> GetByNotCustomer()
-{
+    public async Task<IEnumerable<object>> GetByNotCustomer()
+    {
     return await _context.Employees
                         .Where(e => e.JobTitle == "REPRESENTANTE VENTAS")
                         .Select(e => new
@@ -122,8 +120,8 @@ public async Task<IEnumerable<object>> GetByNotCustomer()
                             LastName = e.LastName1 + " " + e.LastName2,
                             e.JobTitle,
                             e.Office.Phone
-                        }).ToListAsync();
-}
+                        }).ToListAsync();                        
+    }
 
 Se crea un objeto por que me estoy quedando corto de tiempo, los dos enpoints anteriores eran los más largos de todos los 63 y ademas los hice variables, Profe tengame piedad. 
 Se filtra por empleados con el cargo representante ventas
@@ -133,7 +131,7 @@ Se crea un objeto anonimo que almacena los atributos solicitados
 ```
 /api/product/GetByMostSold
 ```
- public async Task<object> GetByMostSold()
+    public async Task<object> GetByMostSold()
     {
         return await _context.OrderDetails
                             .GroupBy(p => p.ProductId)
