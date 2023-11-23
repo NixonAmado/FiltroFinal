@@ -15,7 +15,6 @@
 ```
 /api/customer/GetWithOrdersQuantity
 ```
-LOGICA
 public async Task<IEnumerable<object>> GetWithOrdersQuantity()
         {
             return await _context.Customers.Select(p => new
@@ -34,7 +33,6 @@ Se crea como objeto, ya que, para este enpoint necesito una entidad que no esta 
 ```
 /api/order/GetWithDataByOrderNotDelivered
 ```
-LOGICA
 public async Task<IEnumerable<Order>> GetWithDataByOrderNotDelivered()
 {
     return await _context.Orders
@@ -52,7 +50,6 @@ Se hace el include de customer para poder traerme el id asociado a este.
 ```
 /api/product/GetByNotOrdered
 ```
-LOGICA
 public async Task<IEnumerable<Product>> GetByNotOrdered()
 {
     return await _context.Products
@@ -68,7 +65,6 @@ Se aplica un filtro con where, donde se aplica un any para decir que si el produ
 ```
 api/office/GetByNotAssociatedEmployeeToGamaP/{gama}
 ```
-LOGICA
 public async Task<IEnumerable<Office>> GetByNotAssociatedEmployeeToGamaP(string gama)
 {
     return await _context.Offices 
@@ -88,7 +84,6 @@ Al momento de usar el signo de admiracion le cambiamos el retorno a todos aquell
 ```
 /api/product/GetTotalSalesByRangeIva/{rango}
 ```
-LOGICA
 public async Task<IEnumerable<object>> GetTotalSalesByRangeIva(decimal range)
 {
     return await _context.OrderDetails
@@ -117,7 +112,6 @@ se ordena por el precio total con impuestos
 ```
 /api/employee/GetByNotCustomer
 ```
-LOGICA
 public async Task<IEnumerable<object>> GetByNotCustomer()
 {
     return await _context.Employees
@@ -138,9 +132,8 @@ Se crea un objeto anonimo que almacena los atributos solicitados
 7.Devuelve el nombre del producto del que se han vendido mas unidades.(Tenga en cuenta que tendra que calcular cual es el numero total de unidades que se han vendido de cada producto a partir de los datos de la tabla detalle pedido)
 ```
 /api/product/GetByMostSold
-```   
-   
-    public async Task<object> GetByMostSold()
+```
+ public async Task<object> GetByMostSold()
     {
         return await _context.OrderDetails
                             .GroupBy(p => p.ProductId)
@@ -163,7 +156,6 @@ Se ordena de mayor a menor por las unidades vendidas y se selecciona el primero
 ```
 /api/product/GetByMostSoldLimit
 ```   
-   
     public async Task<IEnumerable<object>> GetByMostSoldLimit()
     {
         return await _context.OrderDetails
