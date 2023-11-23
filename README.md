@@ -1,5 +1,5 @@
 # FiltroFinal
-
+.tiene RateLimit Integrado
 #### Pasos para el volcado de datos a la bd
 1. Para este proyecto se requiere el uso de mySql Workbench
 2. Entra a Api y ejecuta el comando dotnet run, si no funciona puedes hacer uso del script Update para que ef convierta tu estructura orienta a objetos a una tabular en la bd.
